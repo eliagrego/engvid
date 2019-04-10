@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="EngVid.jnlp">
+  <information>
+    <title>EngVid</title>
+    <vendor>elia</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="EngVid.jar" size="55462" download="eager" />
+    <jar href="lib\client-combined-3.141.59.jar" size="1527879" download="eager" />
+    <jar href="lib\jsoup-1.11.3.jar" size="395748" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="EngVid" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="engvid.EngVid"  name="EngVid" />
+  <update check="always"/>
+</jnlp>
