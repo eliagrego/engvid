@@ -41,5 +41,24 @@ public class M_Author implements Serializable {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof M_Author){
+            M_Author m2 = (M_Author)obj;
+            if(m2.getName().trim().toLowerCase().equals(name.trim().toLowerCase())){
+                if(m2.getDescription().trim().toLowerCase().equals(description.trim().toLowerCase())){
+                    if(m2.getUrl().trim().toLowerCase().equals(url.trim().toLowerCase())){
+                        if(m2.getUrlfotina().trim().toLowerCase().equals(urlfotina.trim().toLowerCase())){
+                            if(m2.getUrlyoutube().trim().toLowerCase().equals(urlyoutube.trim().toLowerCase())){
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
     
 }
