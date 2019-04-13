@@ -15,12 +15,9 @@ public class ResourcesCNT extends VBox {
     
     private Resources res;
 
-    public ResourcesCNT(Resources res) {
-                        
-        this.res = res;
-        
-        fillResources();
-        
+    public ResourcesCNT(Resources res) {                        
+        this.res = res;        
+        fillResources();        
     }
         
     private void fillResources(){
@@ -46,47 +43,15 @@ public class ResourcesCNT extends VBox {
                     if(i == list.size() - 1){
                         l = true;
                     }                    
-                    getChildren().add(new Resources_Row(this, model.getResources().getResources().get(x), i, l, false));
+                    getChildren().add(new Resources_Row(this, model.getResources().getResources().get(x), i, l));
                 }
                                 
             }
                         
             ObjectReader.saveModel(model);
             
-        } catch (Exception ex) {
-                       
-            res.getTitolo().setText("Resources - (Offline)");
-            
-            Model m_offline = ObjectReader.getModel();
-            if(m_offline.getResources().getResources().size() == 0){
-                
-                Label warn = new Label("No resource available.\nCheck your internet connection and retry...");
-                warn.setFont(Font.font("Helvetica Neue", FontWeight.LIGHT, 14));
-                getChildren().add(warn);
-                
-                Button retry = new Button("Retry now");
-                retry.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        getChildren().removeAll(getChildren());
-                        fillResources();
-                    }
-                });
-                getChildren().add(retry);
-                
-            }
-            else{             
-                Model a = ObjectReader.getModel();                
-                for(int i = 0; i < a.getResources().getResources().size(); i++){                    
-                    boolean l = false;
-                    if(i == a.getResources().getResources().size() - 1){
-                        l = true;
-                    }                    
-                    getChildren().add(new Resources_Row(this, m_offline.getResources().getResources().get(i), i, l, true));                    
-                }                
-            }
-            
-        }
+        } catch (Exception ex) {}
+        
     }
 
     public Resources getRes() {

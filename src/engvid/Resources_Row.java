@@ -12,7 +12,9 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -33,14 +35,13 @@ public class Resources_Row extends HBox {
     private M_Res mres;
     private int res_id;
     private Button btn;
-    private boolean offline;
 
-    public Resources_Row(ResourcesCNT resourcesCNT, M_Res mres, int id, boolean last, boolean off) {
+    public Resources_Row(ResourcesCNT resourcesCNT, M_Res mres, int id, boolean last) {
         
         this.resourcesCNT = resourcesCNT;
         this.res_id = id;
-        this.offline = off;
         
+        setCursor(Cursor.HAND);
         setMinWidth(V.WIDTH - V.WIDTH_MENU - 40);
         setBackground(new Background(new BackgroundFill(Paint.valueOf("white"), CornerRadii.EMPTY, Insets.EMPTY)));
         if(!last){
@@ -59,6 +60,7 @@ public class Resources_Row extends HBox {
         btn = new Button("");
         btn.setFont(Font.font("Helvetica Neue", FontWeight.BOLD, 12));
         btn.setBorder(new Border(new BorderStroke(Paint.valueOf("black"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(0.5))));
+        btn.setCursor(Cursor.HAND);
         
         String btnText = "Not Visited";
         if(mres.isSeen()){
@@ -79,7 +81,6 @@ public class Resources_Row extends HBox {
                 boolean bo = !m.getResources().getResources().get(res_id).isSeen();
                 m.getResources().getResources().get(res_id).setSeen(bo);
                 ObjectReader.saveModel(m);
-
                 if(!bo){
                     btn.setText("Not Visited");
                     btn.setBackground(new Background(new BackgroundFill(Paint.valueOf("#ffffa6"), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -94,7 +95,7 @@ public class Resources_Row extends HBox {
         setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {   
-                if(!offline){
+                if(EngVid.isReachableByPing("www.engvid.com")){
                     try {
                         Desktop.getDesktop().browse(new URI(mres.getUrl()));   
                         Model m = ObjectReader.getModel();
@@ -105,6 +106,9 @@ public class Resources_Row extends HBox {
                     } catch (Exception ex) {
                         Logger.getLogger(Resources_Row.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                }
+                else{
+                    new Alert(Alert.AlertType.WARNING, "No Internet Connection, check your connectiity and retry...", ButtonType.OK).show();
                 }
             }
         });
@@ -124,10 +128,6 @@ public class Resources_Row extends HBox {
         
         setPadding(new Insets(7, 5, 7, 10));
         setSpacing(10);
-        
-        if(!offline){
-            setCursor(Cursor.HAND);
-        }
         
         getChildren().add(text);
         getChildren().add(btn);

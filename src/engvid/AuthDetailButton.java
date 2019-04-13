@@ -6,6 +6,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -64,15 +66,20 @@ public class AuthDetailButton extends VBox {
             @Override
             public void handle(MouseEvent event) {
                 try{
-                    if(id == 0){
-                        Desktop.getDesktop().browse(new URI(autore.getUrlyoutube())); 
+                    if(EngVid.isReachableByPing("www.engvid.com")){                            
+                        if(id == 0){
+                            Desktop.getDesktop().browse(new URI(autore.getUrlyoutube())); 
+                        }
+                        else if(id == 1){
+                            Desktop.getDesktop().browse(new URI(autore.getUrl())); 
+                        }
+                        else if(id == 2){
+                            // TODO
+                        }  
                     }
-                    else if(id == 1){
-                        Desktop.getDesktop().browse(new URI(autore.getUrl())); 
-                    }
-                    else if(id == 2){
-                        // TODO
-                    }
+                    else{
+                        new Alert(Alert.AlertType.WARNING, "No Internet Connection, check your connectiity and retry...", ButtonType.OK).show();
+                    }                     
                 }catch(Exception e){}
             }
         });

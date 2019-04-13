@@ -7,7 +7,9 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -116,7 +118,12 @@ public class Author_GUI_Manager extends VBox {
                     @Override
                     public void handle(MouseEvent event) {
                         try{
-                            getAuth_GUI().getMain().setAuthorDetail(auth);
+                            if(EngVid.isReachableByPing("www.engvid.com")){                            
+                                getAuth_GUI().getMain().setAuthorDetail(auth);   
+                            }
+                            else{
+                                new Alert(Alert.AlertType.WARNING, "No Internet Connection, check your connectiity and retry...", ButtonType.OK).show();
+                            }                            
                         }catch(Exception e){}
                     }
                 });
@@ -158,8 +165,13 @@ public class Author_GUI_Manager extends VBox {
                 ytbtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        try{
-                            Desktop.getDesktop().browse(new URI(auth.getUrlyoutube()));   
+                        try{                            
+                            if(EngVid.isReachableByPing("www.engvid.com")){                            
+                                Desktop.getDesktop().browse(new URI(auth.getUrlyoutube()));   
+                            }
+                            else{
+                                new Alert(Alert.AlertType.WARNING, "No Internet Connection, check your connectiity and retry...", ButtonType.OK).show();
+                            }
                         }catch(Exception e){}
                     }
                 });

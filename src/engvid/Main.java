@@ -36,7 +36,7 @@ public class Main extends HBox {
 
             getChildren().add(menu);
             setWelcome();
-            setAuthors();
+            //setAuthors();
             
         }
         else{
