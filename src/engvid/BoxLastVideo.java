@@ -6,6 +6,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -94,8 +96,13 @@ public class BoxLastVideo extends HBox {
         rightTit.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {                
-                try {                    
-                    Desktop.getDesktop().browse(new URI(url));                      
+                try {   
+                    if(EngVid.isReachableByPing("www.engvid.com")){
+                        Desktop.getDesktop().browse(new URI(url));  
+                    }
+                    else{
+                        new Alert(Alert.AlertType.WARNING, "No Internet Connection, check your connectiity and retry...", ButtonType.OK).show();
+                    }                                        
                 }catch(Exception e){}
             }
         });

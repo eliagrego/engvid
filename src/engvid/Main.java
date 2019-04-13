@@ -23,18 +23,29 @@ public class Main extends HBox {
         
         this.engVid = engVid;
         
-        welcomeflag = false;
-        resourceflag = false;
-        authorflag = false;
-        p3flag = false;
-        
-        menu = new Menu(this);
-        
-        setBackground(V.MAINBG);
-        
-        getChildren().add(menu);
-        setWelcome();
-        setAuthors();
+        if(EngVid.isReachableByPing("www.engvid.com")){
+            
+            welcomeflag = false;
+            resourceflag = false;
+            authorflag = false;
+            p3flag = false;
+
+            menu = new Menu(this);
+
+            setBackground(V.MAINBG);
+
+            getChildren().add(menu);
+            setWelcome();
+            setAuthors();
+            
+        }
+        else{
+            
+            engVid.getPrimaryStage().setMaxWidth(400);
+            engVid.getPrimaryStage().setMaxHeight(200);
+            getChildren().add(new NoInternetMessage());
+            
+        }
         
     }
 
@@ -60,7 +71,7 @@ public class Main extends HBox {
             welcomeflag = true;
         }        
         if(getChildren().size() == 2){            
-            getChildren().remove(1);
+           getChildren().remove(1);
         }
         getChildren().add(welcome);
     }
@@ -69,8 +80,10 @@ public class Main extends HBox {
         if(!resourceflag){
             resource = new Resources(this);
             resourceflag = true;
-        }        
-        getChildren().remove(1);
+        }
+        if(getChildren().size() == 2){            
+           getChildren().remove(1);
+        }
         getChildren().add(resource);
     }
     
@@ -79,7 +92,9 @@ public class Main extends HBox {
             auth_gui = new Auth_GUI(this);
             authorflag = true;
         }
-        getChildren().remove(1);
+        if(getChildren().size() == 2){            
+           getChildren().remove(1);
+        }
         getChildren().add(auth_gui);
     }
         
