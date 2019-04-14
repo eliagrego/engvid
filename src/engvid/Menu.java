@@ -25,7 +25,7 @@ public class Menu extends VBox {
         MyButtonMenu welcome = new MyButtonMenu("Home");
         MyButtonMenu resource = new MyButtonMenu("Resources");
         MyButtonMenu autori = new MyButtonMenu("Authors");
-        MyButtonMenu b3 = new MyButtonMenu("b3");
+        MyButtonMenu videoBrowse = new MyButtonMenu("Videos");
         
         welcome.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -45,17 +45,17 @@ public class Menu extends VBox {
                 main.setAuthors();
             }
         });
-        b3.setOnAction(new EventHandler<ActionEvent>() {
+        videoBrowse.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                main.setP3();
+                main.setVideoBrowse();
             }
         });
         
         getChildren().add(welcome);
         getChildren().add(resource);
         getChildren().add(autori);
-        getChildren().add(b3);
+        getChildren().add(videoBrowse);
         
     }
 

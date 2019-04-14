@@ -74,7 +74,10 @@ public class AuthDetailButton extends VBox {
                             Desktop.getDesktop().browse(new URI(autore.getUrl())); 
                         }
                         else if(id == 2){
-                            // TODO
+                            Configuration c_tmp = new Configuration();
+                            c_tmp.getAutori().add(mauth);
+                            det.getMain().setVideoBrowse();
+                            det.getMain().getVideoBrowse().applyFilter(c_tmp);
                         }  
                     }
                     else{

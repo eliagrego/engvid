@@ -16,8 +16,8 @@ public class Main extends HBox {
     private Auth_GUI auth_gui;
     private boolean authorflag;
     
-    private P3_1 p3;
-    private boolean p3flag;
+    private VideoBrowse videoBrowse;
+    private boolean videoBrowseflag;
     
     public Main(EngVid engVid) {
         
@@ -28,7 +28,7 @@ public class Main extends HBox {
             welcomeflag = false;
             resourceflag = false;
             authorflag = false;
-            p3flag = false;
+            videoBrowseflag = false;
 
             menu = new Menu(this);
 
@@ -36,7 +36,7 @@ public class Main extends HBox {
 
             getChildren().add(menu);
             setWelcome();
-            //setAuthors();
+            setVideoBrowse();
             
         }
         else{
@@ -49,8 +49,8 @@ public class Main extends HBox {
         
     }
 
-    public P3_1 getP3() {
-        return p3;
+    public VideoBrowse getP3() {
+        return videoBrowse;
     }
     
     public Auth_GUI getP2() {
@@ -104,13 +104,17 @@ public class Main extends HBox {
         getChildren().add(authdet);
     }
     
-    public void setP3() {
-        if(!p3flag){
-            p3 = new P3_1(this);
-            p3flag = true;
+    public void setVideoBrowse() {
+        if(!videoBrowseflag){
+            videoBrowse = new VideoBrowse(this, null);
+            videoBrowseflag = true;
         }
         getChildren().remove(1);
-        getChildren().add(p3);
+        getChildren().add(videoBrowse);
+    }
+
+    public VideoBrowse getVideoBrowse() {
+        return videoBrowse;
     }
     
 }
