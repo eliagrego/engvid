@@ -81,12 +81,12 @@ public class VideoBrowse extends VBox {
                 }
             });
             filterMgr.setOnAction(new EventHandler<ActionEvent>() {
-                public void handle(ActionEvent event) {
-                    FilterManager fm = new FilterManager(itself, main.getEngVid().getPrimaryStage(), conf);
+                public void handle(ActionEvent event) {                    
                     try {
-                        Stage stage = new Stage();
+                        Stage stage = new Stage();                     
                         stage.setTitle("My New Stage Title");
-                        stage.setScene(new Scene(fm, 450, 450));                        
+                        FilterManager fm = new FilterManager(itself, main.getEngVid().getPrimaryStage(), conf, stage);   
+                        stage.setScene(new Scene(fm, 600, 500));                        
                         stage.setResizable(false);
                         stage.getIcons().add(new Image("file:engvid.png"));
                         stage.setTitle(V.TITLE + " [Filters]");
@@ -100,7 +100,8 @@ public class VideoBrowse extends VBox {
             });            
             header.getChildren().add(titolo);
             header.getChildren().add(filterMgr);
-            getChildren().add(header);            
+            getChildren().add(header);       
+                        
         }
         else{            
             // Offline

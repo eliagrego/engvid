@@ -48,12 +48,8 @@ public class Main extends HBox {
         }
         
     }
-
-    public VideoBrowse getP3() {
-        return videoBrowse;
-    }
     
-    public Auth_GUI getP2() {
+    public Auth_GUI getAuthGui() {
         return auth_gui;
     }
 
