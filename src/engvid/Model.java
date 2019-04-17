@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Model implements Serializable {
     
-    public static final double VERSION = 1.3;
+    public static final double VERSION = 1.5;
     
     private M_Resources resources;
     private M_Authors authors;

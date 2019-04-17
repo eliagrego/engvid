@@ -1,5 +1,9 @@
 package engvid;
 
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.Scanner;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -29,6 +34,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class VideoBrowse extends VBox {
     
@@ -97,10 +106,78 @@ public class VideoBrowse extends VBox {
                         e.printStackTrace();
                     }
                 }
-            });            
+            });
+            
+            ArrayList<M_Video> videos = new ArrayList<M_Video>();
+            
+            String content = null;
+            URLConnection connection = null;
+            try {
+                connection =  new URL("https://www.engvid.com/english-lesson-browser/").openConnection();
+                Scanner scanner = new Scanner(connection.getInputStream());
+                scanner.useDelimiter("\\Z");
+                content = scanner.next();
+                scanner.close();
+            }catch ( Exception ex ) {
+                ex.printStackTrace();
+            }
+            
+            content = content.replace("&#038;", "&");
+            content = content.replace("&#8216;", "\'");
+            content = content.replace("&#8217;", "\'");
+            content = content.replace("&#8211;", "-");
+            content = content.replace("&#8212;", "-");
+            content = content.replace("&#8221;", "\"");
+            content = content.replace("&#8220;", "\"");
+            content = content.replace("&#8230;", "...");            
+            content = content.replace("&nbsp;", "");
+            content = content.replace("&bull;", "");
+            content = content.replace("&#x1f494;", "");
+            content = content.replace("️", "");
+            content = content.replace("&amp;", "&");
+            
+            String[] tmp = content.split("<div");
+            for(int i = 2; i < tmp.length; i++){
+                String[] tutto = tmp[i].split("</div>")[0].split("<a")[2].split("</a>")[0].split("\n");                
+                String link = tutto[0].split("\"")[1].trim();
+                String titolo = tutto[1].split(">")[1].split("<")[0].trim();                
+                ArrayList<Integer> levels = new ArrayList<Integer>();
+                ArrayList<String> topics = new ArrayList<String>();    
+                tutto[3] = tutto[3].trim();
+                String[] descr = tutto[3].split(">");                
+                for(int j = 0; j < descr.length; j++){
+                    if(j%2 == 1){
+                        String item = descr[j].replace("</span", "").trim();
+                        if(item.charAt(0) >= '1' && item.charAt(0) <= '3'){
+                            levels.add(Integer.parseInt(String.valueOf(item.charAt(0))));
+                        }
+                        else{                            
+                            String[] words = item.split(" ");
+                            String newItem = "";
+                            for(int k = 0; k < words.length; k++){
+                                newItem += words[k].substring(0, 1).toUpperCase().concat(words[k].substring(1).toLowerCase()) + " ";
+                            }
+                            newItem = newItem.trim();                           
+                            topics.add(newItem);
+                        }
+                    }
+                }
+                
+                if(link.contains("english-resource")){
+                    // It is a resource
+                    //System.out.println(titolo);
+                }
+                else{
+                    //System.out.println(titolo);
+                    M_Video video = new M_Video(link, titolo, levels, topics);
+                    videos.add(video);
+                }
+                
+            }
+                                   
             header.getChildren().add(titolo);
             header.getChildren().add(filterMgr);
-            getChildren().add(header);       
+            getChildren().add(header);        
                         
         }
         else{            
