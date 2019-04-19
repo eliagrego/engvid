@@ -58,6 +58,11 @@ public class Menu extends VBox {
         getChildren().add(videoBrowse);
         
     }
+    
+    public void sparisci(){
+        this.setMaxWidth(0);
+        this.setMaxHeight(0);
+    }
 
     public Main getMain() {
         return main;

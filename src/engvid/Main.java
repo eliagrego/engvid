@@ -105,8 +105,10 @@ public class Main extends HBox {
             videoBrowse = new VideoBrowse(this, null);
             videoBrowseflag = true;
         }
-        getChildren().remove(1);
-        getChildren().add(videoBrowse);
+        try{
+            getChildren().remove(1);
+            getChildren().add(videoBrowse);
+        }catch(Exception e){}
     }
 
     public VideoBrowse getVideoBrowse() {
